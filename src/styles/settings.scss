@@ -8,3 +8,9 @@
 // @use 'vuetify/settings' with (
 //   $color-pack: false
 // );
+
+main {
+  @media (prefers-color-scheme: dark) {
+    background-color: #575757;
+  }
+}
