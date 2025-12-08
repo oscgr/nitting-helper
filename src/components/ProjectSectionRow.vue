@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex my-1">
     <div class="flex-grow-1">
-      <v-icon :color="started ? (finished ? 'secondary' : 'deep-orange-lighten-2') : 'grey-lighten-1'" :icon="started ? mdiCircle : mdiCircleOutline" />
+      <v-icon :color="started ? (finished ? 'secondary' : 'deep-orange-lighten-3') : 'grey-lighten-1'" :icon="started ? mdiCircle : mdiCircleOutline" />
     </div>
     <div class="d-flex justify-center">
       <ProjectSectionCol

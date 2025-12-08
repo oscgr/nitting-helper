@@ -1,7 +1,7 @@
 <template>
   <v-icon
     class="ml-2"
-    :color="checked ? (finished ? 'secondary' : 'deep-orange-lighten-2') : 'grey-lighten-1'"
+    :color="checked ? (finished ? 'secondary' : 'deep-orange-lighten-3') : 'grey-lighten-1'"
     :content="row"
     :icon="checked ? (last ? mdiSquareRoundedBadge : mdiSquareRounded) : (last ? mdiSquareRoundedBadgeOutline : mdiSquareRoundedOutline)"
     size="24px"

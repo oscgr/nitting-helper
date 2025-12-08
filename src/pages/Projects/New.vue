@@ -69,8 +69,7 @@
 <script lang="ts" setup>
 
   import type { VForm } from 'vuetify/components'
-  import { faker } from '@faker-js/faker/locale/fr'
-  import { cloneDeep } from 'es-toolkit'
+  import { cloneDeep, randomInt } from 'es-toolkit'
   import { computed, ref } from 'vue'
   import { useRouter } from 'vue-router'
   import { useRules } from 'vuetify/labs/rules'
@@ -86,7 +85,9 @@
   const { addProject } = useProjects()
   const router = useRouter()
 
-  const defaultName = computed(() => `${faker.animal.cat()} ${faker.color.human()}`)
+  const animals = ['Chat', 'Poisson', 'Hamster', 'Axolotl', 'Souris', 'Lapin', 'Macareux']
+  const colors = ['gris', 'noir', 'blanc', 'marron', 'écaille de tortue', 'calico']
+  const defaultName = computed(() => `${animals[randomInt(animals.length)]} ${colors[randomInt(colors.length)]}`)
 
   function reset () {
     form.value?.reset()

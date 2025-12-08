@@ -1,6 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
 import Vue from '@vitejs/plugin-vue'
-import Fonts from 'unplugin-fonts/vite'
 // Plugins
 import Components from 'unplugin-vue-components/vite'
 import VueRouter from 'unplugin-vue-router/vite'
@@ -28,27 +27,14 @@ export default defineConfig({
     Components({
       dts: 'src/components.d.ts',
     }),
-    Fonts({
-      fontsource: {
-        families: [
-          {
-            name: 'Roboto',
-            weights: [100, 300, 400, 500, 700, 900],
-            styles: ['normal'],
-          },
-        ],
-      },
-    }),
   ],
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          'vue': ['vue', 'vue-router', '@vueuse/core'],
-          'vuetify': ['vuetify'],
-          'fonts': ['@fontsource/roboto'],
-          'vendor': ['luxon', 'es-toolkit'],
-          'faker-data': ['@faker-js/faker'],
+          vue: ['vue', 'vue-router', '@vueuse/core'],
+          vuetify: ['vuetify'],
+          vendor: ['luxon', 'es-toolkit'],
         },
       },
     },

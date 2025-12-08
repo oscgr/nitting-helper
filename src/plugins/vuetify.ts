@@ -12,7 +12,6 @@ import { en, fr } from 'vuetify/locale'
 import colors from 'vuetify/util/colors'
 
 // Styles
-import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
