@@ -13,10 +13,10 @@
 <script lang="ts" setup>
   import type { Project, ProjectSection } from '@/stores/projects.ts'
   import { indexOf } from 'es-toolkit/compat'
-  import { computed } from 'vue'
+  import { computed, type DeepReadonly } from 'vue'
   import ProjectSectionRow from '@/components/ProjectSectionRow.vue'
 
-  const props = defineProps<{ project: Readonly<Project>, section: Readonly<ProjectSection> }>()
+  const props = defineProps<{ project: DeepReadonly<Project>, section: DeepReadonly<ProjectSection> }>()
 
   const startIndexOfSection = computed(() => {
     const indexOfSection = indexOf(props.project.sections, props.section)

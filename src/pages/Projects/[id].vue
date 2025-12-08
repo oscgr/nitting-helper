@@ -31,6 +31,7 @@
   const route = useRoute()
   const { getProject, advanceProject } = useProjects()
 
+  // @ts-expect-error todo type params of route
   const id = computed(() => toNumber(route.params.id as string))
   const maxCurrent = computed(() => project.value.sections.reduce((acc, curr) => acc + (curr.rows * curr.cols), 0))
   const project = computed(() => getProject(id.value))

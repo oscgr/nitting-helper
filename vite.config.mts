@@ -34,12 +34,25 @@ export default defineConfig({
           {
             name: 'Roboto',
             weights: [100, 300, 400, 500, 700, 900],
-            styles: ['normal', 'italic'],
+            styles: ['normal'],
           },
         ],
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vue': ['vue', 'vue-router', '@vueuse/core'],
+          'vuetify': ['vuetify'],
+          'fonts': ['@fontsource/roboto'],
+          'vendor': ['luxon', 'es-toolkit'],
+          'faker-data': ['@faker-js/faker'],
+        },
+      },
+    },
+  },
   optimizeDeps: {
     exclude: [
       'vuetify',

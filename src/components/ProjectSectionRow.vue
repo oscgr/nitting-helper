@@ -21,10 +21,10 @@
 <script lang="ts" setup>
   import type { Project, ProjectSection } from '@/stores/projects.ts'
   import { mdiCircle, mdiCircleOutline } from '@mdi/js'
-  import { computed } from 'vue'
+  import { computed, type DeepReadonly } from 'vue'
   import ProjectSectionCol from '@/components/ProjectSectionCol.vue'
 
-  const props = defineProps<{ startIndex: number, project: Readonly<Project>, section: Readonly<ProjectSection>, row: number }>()
+  const props = defineProps<{ startIndex: number, project: DeepReadonly<Project>, section: DeepReadonly<ProjectSection>, row: number }>()
   const started = computed(() => (props.project.current - props.startIndex) > (props.section.cols * (props.row - 1)))
   const finished = computed(() => (props.project.current - props.startIndex) >= (props.section.cols * props.row))
 

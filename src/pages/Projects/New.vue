@@ -69,7 +69,7 @@
 <script lang="ts" setup>
 
   import type { VForm } from 'vuetify/components'
-  import { fakerFR } from '@faker-js/faker'
+  import { faker } from '@faker-js/faker/locale/fr'
   import { cloneDeep } from 'es-toolkit'
   import { computed, ref } from 'vue'
   import { useRouter } from 'vue-router'
@@ -86,7 +86,7 @@
   const { addProject } = useProjects()
   const router = useRouter()
 
-  const defaultName = computed(() => `${fakerFR.animal.cat()} ${fakerFR.color.human()}`)
+  const defaultName = computed(() => `${faker.animal.cat()} ${faker.color.human()}`)
 
   function reset () {
     form.value?.reset()

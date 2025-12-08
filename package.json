@@ -10,6 +10,8 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
+    "docker:build": "docker build -t oscgr/knitting-helper .",
+    "docker:run": "docker-compose up -d",
     "lint": "eslint . --fix"
   },
   "dependencies": {
