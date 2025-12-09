@@ -28,7 +28,7 @@
         </v-card>
       </v-bottom-sheet>
     </v-card-title>
-    <v-card-text class="pt-4" @click="advanceProject(id)">
+    <v-card-text class="pt-4">
       <ProjectSection
         v-for="(section, sectionIndex) in project.sections"
         :key="section.id"
