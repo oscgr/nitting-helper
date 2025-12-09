@@ -8,8 +8,18 @@
     </v-col>
     <v-col cols="12">
       <v-card>
+        <v-text-field
+          v-model="query"
+          clearable
+          density="compact"
+          flat
+          hide-details
+          label="Rechercher"
+          type="query"
+        />
         <v-list dense>
-          <v-list-item v-if="projects.length === 0" density="compact" title="Aucun projet créé" />
+          <v-list-item v-if="allProjectsQuantity === 0" density="compact" title="Aucun projet créé" />
+          <v-list-item v-else-if="(allProjectsQuantity > 0) && (projects.length === 0)" density="compact" title="Aucun résultat" />
           <v-list-item
             v-for="project in projects"
             :key="project.id"
@@ -38,10 +48,12 @@
   import { mdiCircle, mdiCircleOutline } from '@mdi/js'
   import { orderBy } from 'es-toolkit'
   import { DateTime } from 'luxon'
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
   import useProjects from '@/stores/projects.ts'
 
+  const query = ref('')
   const { searchProjects } = useProjects()
 
-  const projects = computed(() => orderBy(searchProjects(), ['name', 'created'], ['asc', 'desc']))
+  const projects = computed(() => orderBy(searchProjects(query.value), ['name', 'created'], ['asc', 'desc']))
+  const allProjectsQuantity = computed(() => searchProjects().length)
 </script>

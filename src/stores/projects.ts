@@ -1,5 +1,5 @@
 import { useLocalStorage } from '@vueuse/core'
-import { deburr, lowerCase, maxBy, trim } from 'es-toolkit'
+import { deburr, isBoolean, lowerCase, maxBy, trim } from 'es-toolkit'
 import { isNumber } from 'es-toolkit/compat'
 import { readonly } from 'vue'
 
@@ -13,6 +13,7 @@ export interface Project extends CreatedEntity {
   name: string
   sections: ProjectSection[]
   current: number
+  active: boolean
   readonly created: string
   modified: string
 }
@@ -43,10 +44,11 @@ function useProjects () {
   }
 
   const searchProjects = (query?: string) => {
+    const activeProjects = projects.value.filter(p => p.active)
     if (!query) {
-      return readonly(projects.value)
+      return readonly(activeProjects)
     }
-    return readonly(projects.value.filter(p => lowerCase(deburr(p.name)).includes(lowerCase(deburr(query)))))
+    return readonly(activeProjects.filter(p => lowerCase(deburr(p.name)).includes(lowerCase(deburr(query)))))
   }
 
   const addProject = (projectToCreate: ProjectToCreate) => {
@@ -60,6 +62,7 @@ function useProjects () {
       sections: projectToCreate.sections.map((g, i) => ({ ...g, id: i + 1 })),
       id: (maxBy(projects.value, p => p.id)?.id || 0) + 1,
       current: 0,
+      active: true,
       created: new Date().toISOString(),
       modified: new Date().toISOString(),
     }
@@ -67,7 +70,7 @@ function useProjects () {
     return readonly(project)
   }
 
-  const patchProject = (id: number, patch: Partial<{ name: string }>) => {
+  const patchProject = (id: number, patch: Partial<{ name: string, active: boolean, current: number }>) => {
     const project = internalGetProject(id)
     if (!project) {
       throw new Error(`Project ${id} not found`)
@@ -75,25 +78,11 @@ function useProjects () {
     if (patch.name) {
       project.name = patch.name // Object pointer suffice
     }
-    project.modified = new Date().toISOString()
-    return readonly(project)
-  }
-
-  const patchProjectSection = (id: number, sectionId: number, patch: Partial<{ cols: number, rows: number }>) => {
-    const project = internalGetProject(id)
-    if (!project) {
-      throw new Error(`Project ${id} not found`)
+    if (isBoolean(patch.active)) {
+      project.active = patch.active // Object pointer suffice
     }
-    const section = project.sections.find(s => s.id === sectionId)
-    if (!section) {
-      throw new Error(`Section ${sectionId} of project ${id} not found`)
-    }
-
-    if (isNumber(patch.cols)) {
-      section.cols = patch.cols // Object pointer suffice
-    }
-    if (isNumber(patch.rows)) {
-      section.rows = patch.rows // Object pointer suffice
+    if (isNumber(patch.current)) {
+      project.current = patch.current // Object pointer suffice
     }
     project.modified = new Date().toISOString()
     return readonly(project)
@@ -110,11 +99,33 @@ function useProjects () {
     return readonly(project)
   }
 
+  const addProjectSection = (id: number, sectionToCreate: ProjectSectionToCreate) => {
+    const project = internalGetProject(id)
+    if (!project) {
+      throw new Error(`Project ${id} not found`)
+    }
+    project.sections.push({ ...sectionToCreate, id: (maxBy(project.sections, p => p.id)?.id || 0) + 1 })
+    return readonly(project)
+  }
+
+  const removeProjectSection = (id: number, sectionId: number) => {
+    const project = internalGetProject(id)
+    if (!project) {
+      throw new Error(`Project ${id} not found`)
+    }
+    const section = project.sections.find(s => s.id === sectionId)
+    if (!section) {
+      throw new Error(`Section ${sectionId} of project ${id} not found`)
+    }
+    project.sections = project.sections.filter(s => s.id !== sectionId)
+    return readonly(project)
+  }
+
   const removeProject = (id: number) => {
     projects.value = projects.value.filter(p => p.id !== id)
   }
 
-  return { addProject, removeProject, getProject, searchProjects, patchProject, patchProjectSection, advanceProject }
+  return { addProject, removeProject, getProject, searchProjects, patchProject, addProjectSection, removeProjectSection, advanceProject }
 }
 
 export default useProjects

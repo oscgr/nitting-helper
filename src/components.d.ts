@@ -11,6 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ConfirmDialog: typeof import('./components/ConfirmDialog.vue')['default']
     ProjectSection: typeof import('./components/ProjectSection.vue')['default']
     ProjectSectionCol: typeof import('./components/ProjectSectionCol.vue')['default']
     ProjectSectionRow: typeof import('./components/ProjectSectionRow.vue')['default']

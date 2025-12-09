@@ -29,6 +29,7 @@
               </div>
               <v-number-input
                 v-model="section.cols"
+                control-variant="split"
                 density="compact"
                 hint="Diminution incluse"
                 label="Nombre de rangées"
@@ -40,6 +41,7 @@
               <v-number-input
                 v-model="section.rows"
                 class="mt-2"
+                control-variant="split"
                 density="compact"
                 hide-details="auto"
                 label="Répétitions"
